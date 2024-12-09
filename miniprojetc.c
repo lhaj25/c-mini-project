@@ -15,7 +15,7 @@ struct Account {
 };
 
 struct Transaction {
-    char type[50]; // "Buy", "Sell", or "Service"
+    char type[50]; 
     char details[100];
     float amount;
     char date[30];
@@ -24,7 +24,7 @@ struct Transaction {
 
 struct Transaction *transactionStack = NULL;
 
-// Function to push a transaction onto the stack
+
 void pushTransaction(const char *type, const char *details, float amount) {
     struct Transaction *newTransaction = (struct Transaction *)malloc(sizeof(struct Transaction));
 
@@ -32,7 +32,7 @@ void pushTransaction(const char *type, const char *details, float amount) {
     strcpy(newTransaction->details, details);
     newTransaction->amount = amount;
 
-    // Get current date and time
+   
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     sprintf(newTransaction->date, "%02d-%02d-%04d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
@@ -41,7 +41,7 @@ void pushTransaction(const char *type, const char *details, float amount) {
     transactionStack = newTransaction;
 }
 
-// Function to display the transaction history
+
 void displayTransactionHistory() {
     if (transactionStack == NULL) {
         printf("\nNo transactions to display.\n");
@@ -57,7 +57,7 @@ void displayTransactionHistory() {
     }
 }
 
-// Functions for validation (unchanged)
+
 int isValidEmail(const char *email) {
     return (strchr(email, '@') != NULL && strchr(email, '.') != NULL);
 }
@@ -150,7 +150,7 @@ void createAccount(struct Account *acc) {
     saveAccountToFile(acc);
 }
 
-// Function to save account details to a file
+
 void saveAccountToFile(struct Account *acc) {
     FILE *file = fopen("accounts.txt", "a");
     if (file == NULL) {
@@ -168,7 +168,7 @@ void saveAccountToFile(struct Account *acc) {
     fclose(file);
 }
 
-// Function to load account from file
+
 int loadAccountFromFile(struct Account *acc, const char *username) {
     FILE *file = fopen("accounts.txt", "r");
     if (file == NULL) {
@@ -182,15 +182,15 @@ int loadAccountFromFile(struct Account *acc, const char *username) {
                   (*acc).currency, (*acc).crypto) == 7) {
         if (strcmp((*acc).username, username) == 0) {
             fclose(file);
-            return 1; // Account found
+            return 1; 
         }
     }
 
     fclose(file);
-    return 0; // Account not found
+    return 0; 
 }
 
-// Function to update account details in file
+
 void updateAccountInFile(struct Account *acc) {
     FILE *file = fopen("accounts.txt", "r");
     FILE *tempFile = fopen("temp.txt", "w");
@@ -225,7 +225,7 @@ void updateAccountInFile(struct Account *acc) {
     rename("temp.txt", "accounts.txt");
 }
 
-// Function to handle buying/selling cryptocurrency
+
 void tradeCryptocurrency(struct Account *acc) {
     int action;
     float amount;
@@ -294,7 +294,7 @@ void tradeCryptocurrency(struct Account *acc) {
     }
 }
 
-// Function to handle buying services
+
 void buyServices(struct Account *acc) {
     int serviceChoice;
     float serviceCost;
@@ -334,7 +334,7 @@ void buyServices(struct Account *acc) {
     }
 }
 
-// Function to display trading menu
+
 void displayMenu(struct Account *acc) {
     int choice;
     do {
@@ -382,7 +382,7 @@ int main() {
 
         if (mainChoice == 1) {
             createAccount(&userAccount);
-            displayMenu(&userAccount); // Proceed to menu after account creation
+            displayMenu(&userAccount); 
         } else if (mainChoice == 2) {
             char username[50], password[50];
             printf("Enter username: ");
@@ -393,7 +393,7 @@ int main() {
             if (loadAccountFromFile(&userAccount, username)) {
                 if (strcmp(userAccount.password, password) == 0) {
                     printf("Login successful!\n");
-                    displayMenu(&userAccount); // Proceed to menu after login
+                    displayMenu(&userAccount); 
                 } else {
                     printf("Invalid credentials!\n");
                 }
@@ -405,7 +405,7 @@ int main() {
         } else {
             printf("Invalid choice.\n");
         }
-    } while (mainChoice != 3); // Keep showing the main menu until the user chooses to exit
+    } while (mainChoice != 3); 
 
     return 0;
 }
